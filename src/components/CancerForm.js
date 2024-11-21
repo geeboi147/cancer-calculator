@@ -51,7 +51,7 @@ const CancerForm = () => {
     };
 
     // Send the POST request to backend
-    fetch("https://cancer-calculator-backend.onrender.com", {
+    fetch("https://cancer-calculator-backend.onrender.com/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
