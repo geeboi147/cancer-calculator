@@ -30,8 +30,20 @@ const CancerForm = () => {
     // Prepare form data for submission
     const data = {
       age: formData.age,
-      tumorSize: formData.tumorSize === "small" ? 1 : formData.tumorSize === "medium" ? 2 : 3,
-      invasiveNodes: formData.invasiveNodes === "none" ? 0 : formData.invasiveNodes === "low" ? 1 : formData.invasiveNodes === "moderate" ? 2 : 3,
+      tumorSize:
+        formData.tumorSize === "small"
+          ? 1
+          : formData.tumorSize === "medium"
+          ? 2
+          : 3,
+      invasiveNodes:
+        formData.invasiveNodes === "none"
+          ? 0
+          : formData.invasiveNodes === "low"
+          ? 1
+          : formData.invasiveNodes === "moderate"
+          ? 2
+          : 3,
       breast: formData.breast === "left" ? 0 : 1, // Convert 'left' to 0, 'right' to 1
       quadrant: formData.quadrant, // Send quadrant as a string value like 'upper_inner'
       history: formData.history === "no" ? 0 : 1, // Convert 'no' to 0, 'yes' to 1
@@ -39,12 +51,12 @@ const CancerForm = () => {
     };
 
     // Send the POST request to backend
-    fetch("http://localhost:5000/predict", {
+    fetch("https://cancer-calculator-backend.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),  // Send the form data as JSON
+      body: JSON.stringify(data), // Send the form data as JSON
     })
       .then((response) => response.json())
       .then((result) => {
@@ -251,19 +263,21 @@ const CancerForm = () => {
           </div>
         </div>
 
-        {/* Submit Button */}
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded mt-4">
-          Predict
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+        >
+          Submit
         </button>
       </form>
 
-      {/* Display Prediction Result */}
+      {/* Display Prediction Results */}
       {predictionResult && (
-        <div className="mt-6 p-4 bg-gray-200 rounded">
-          <h3 className="text-lg font-bold">Prediction Result</h3>
-          <p><strong>Prediction: </strong>{predictionResult.prediction}</p>
-          <p><strong>Positive Probability: </strong>{predictionResult.positiveProbability}</p>
-          <p><strong>Negative Probability: </strong>{predictionResult.negativeProbability}</p>
+        <div className="mt-4 bg-white p-4 rounded shadow">
+          <h3 className="text-lg font-bold mb-2">Prediction Results</h3>
+          <p>Prediction: {predictionResult.prediction}</p>
+          <p>Positive Probability: {predictionResult.positiveProbability}</p>
+          <p>Negative Probability: {predictionResult.negativeProbability}</p>
         </div>
       )}
     </div>
